@@ -18,7 +18,7 @@ SOLID prensiblerine uygun bir proje oluşturmaya çalıştım.
 ### List of things done
 Req 1 : İş Arayanlar sisteme kayıt olabilmelidir.
 Kabul Kriterleri:
-•	Kayıt sırasında kullanıcıdan ad, soyad, tcno, doğum yılı, e-Posta, şifre, şifre tekrarı bilgileri istenir.
-•	Tüm alanlar zorunludur. Kullanıcı bilgilendirilir.
-•	Daha önce kayıtlı bir e-posta veya tcno var ise kayıt gerçekleşmez. Kullanıcı bilgilendirilir.
+-Kayıt sırasında kullanıcıdan ad, soyad, tcno, doğum yılı, e-Posta, şifre, şifre tekrarı bilgileri istenir.
+-Tüm alanlar zorunludur. Kullanıcı bilgilendirilir.
+-Daha önce kayıtlı bir e-posta veya tcno var ise kayıt gerçekleşmez. Kullanıcı bilgilendirilir.
 
