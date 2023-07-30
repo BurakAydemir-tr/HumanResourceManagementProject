@@ -12,7 +12,7 @@ namespace DataAccess.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=HrmsNew;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=HrmsNew;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         public DbSet<User> Users { get; set; }

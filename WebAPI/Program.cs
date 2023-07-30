@@ -13,6 +13,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.VisualBasic;
+using Serilog;
+using Serilog.Core;
+using Serilog.Sinks.MSSqlServer;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Reflection;
 using System.Security.Claims;
 using WebAPI.ActionFilters;
@@ -69,6 +75,33 @@ builder.Services.AddScoped<IApplicationService, ApplicationManager>();
 
 //Assembly'deki tüm Validator'larý çalýþtýrýyor.
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+/*SeriLog Yapýlandýrýlmasý*/
+var columnOpts = new ColumnOptions(); //log için kolon yapýlandýrmasý
+columnOpts.Store.Remove(StandardColumn.Properties); //log dan kolon kaldýrabiliyoruz
+columnOpts.Store.Add(StandardColumn.LogEvent); //log a kolan ekliyoruz
+columnOpts.LogEvent.DataLength = 2048;
+columnOpts.PrimaryKey = columnOpts.TimeStamp;
+columnOpts.TimeStamp.NonClusteredIndex = true;
+columnOpts.AdditionalColumns = new Collection<SqlColumn>() //Log a tanýmlý olmayan kolon eklenebiliyor.
+{
+    new SqlColumn(){ColumnName = "EnvironmentUserName", PropertyName = "UserName", DataType = SqlDbType.NVarChar, DataLength = 64, AllowNull=true}
+};
+
+Logger log = new LoggerConfiguration() // Log konfigurasyonlaru yapýlýyor
+    //.WriteTo.Console()
+    .WriteTo.File("Logs/log.txt") //Dosyaya yazdýrýlýyor.
+    //Veritabanýna yazdýrýlýyor.
+    .WriteTo.MSSqlServer(connectionString: "Server=localhost;Database=HrmsNew;Trusted_Connection=True;TrustServerCertificate=True",
+        new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true },
+        columnOptions: columnOpts
+        )
+    .Enrich.FromLogContext()
+    .MinimumLevel.Information()
+    .CreateLogger();
+
+//UseSerilog kullanarak build in içindeki loglamayý iptal etmiiþ oluyoruz.
+builder.Host.UseSerilog(log);
 
 
 builder.Services.AddControllers(options =>
