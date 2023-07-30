@@ -64,4 +64,5 @@ Kabul Kriterleri:
 #### Req 16 : Rol ekleme eklendi.
 #### Req 17 :Her bir Endpoint’in bilgileri veri tabanına kaydı yapılabiliyor ve bu endpointler roller ile ilişkilendirilebiliyor.
 #### Req 18: Global exception yapısı eklendi.
-#### Req: 19: Pagination yapısı oluşturuldu.  
+#### Req: 19: Pagination yapısı oluşturuldu.
+#### Req: 20: SeriLog yapısı eklendi. Hem dosyaya hemde veritabanına log kayıtları atılıyor.
